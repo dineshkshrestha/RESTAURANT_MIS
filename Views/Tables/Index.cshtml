@@ -1,0 +1,108 @@
+﻿@model IEnumerable<RESTAURANT_MIS.Tables>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Plugins/datatables-bs4/css/dataTables.bootstrap4.css" rel="stylesheet" />
+<link href="~/Plugins/datatables-buttons/css/buttons.bootstrap4.css" rel="stylesheet" />
+<link href="~/Plugins/datatables-responsive/css/responsive.bootstrap4.min.css" rel="stylesheet" />
+
+
+<div class="content-header">
+    <div class="container-fluid">
+              <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">List of all available restaurant tables</h3>  @Html.ActionLink("Create New", "Create")
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.TableName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CreatedBy)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CreatedAt)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TableName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CreatedBy)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CreatedAt)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.Tableid }) |
+                                    @Html.ActionLink("Details", "Details", new { id = item.Tableid }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.Tableid })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.TableName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CreatedBy)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CreatedAt)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/Plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <script src="~/Plugins/datatables-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/Plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/Plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/Plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+              //  "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
+    </script>
+
+}
