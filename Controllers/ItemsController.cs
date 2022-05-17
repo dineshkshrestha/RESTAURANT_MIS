@@ -29,7 +29,7 @@ namespace RESTAURANT_MIS.Controllers
             if (ModelState.IsValid)
             {
 
-                item.Status = 1;
+              //  item.Status = 1;
                 item.CreatedBy = "Admin";
                 item.CreatedAt = DateTime.Now.ToString();
 
@@ -37,16 +37,42 @@ namespace RESTAURANT_MIS.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-
-
-
-
-
             return RedirectToAction("Index");
         }
 
-        
+
+
+        public ActionResult Details(int id)
+        {
+            ITEMS item = db.ITEMS.Find(id);
+            if (item == null)
+            {
+                return HttpNotFound();
+            }
+            return View(item);
+        }
+
+
+        public ActionResult Edit(int id)
+        {
+            ITEMS item = db.ITEMS.Find(id);
+
+
+            //ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "CustomerName", item.CustomerId);
+
+            if (item == null)
+            {
+                return HttpNotFound();
+            }
+            return View(item);
+        }
+
+
+
+
+
+
+
 
     }
 }

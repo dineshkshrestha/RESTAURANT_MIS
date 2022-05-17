@@ -10,6 +10,11 @@ namespace RESTAURANT_MIS.Controllers
     {
         public ActionResult Index()
         {
+
+
+
+            ViewBag.Message = "Welcome to our application.";
+            ViewBag.MessageType = "Warning";
             return View();
         }
 

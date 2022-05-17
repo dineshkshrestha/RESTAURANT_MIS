@@ -38,6 +38,11 @@ namespace RESTAURANT_MIS.Controllers
         // GET: Tables/Create
         public ActionResult Create()
         {
+
+
+            ViewBag.Message = "You can create new table. Table name must be unique.";
+            ViewBag.MessageType = "Success";
+
             return View();
         }
 

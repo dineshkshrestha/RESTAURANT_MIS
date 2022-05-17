@@ -76,7 +76,16 @@
                                 @Html.DisplayFor(modelItem => item.Price)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Status)
+                              @*  @Html.DisplayFor(modelItem => item.Status)*@
+
+                                @if (item.Status == 1)
+                                {
+                                    @: <span class="badge badge-primary">Available</span>
+                                }
+                                else
+                                {
+                                    @: <span class="badge badge-danger">Not Available</span>
+                                }
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.CreatedBy)
