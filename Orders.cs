@@ -9,7 +9,6 @@
 
 namespace RESTAURANT_MIS
 {
-    using DocumentFormat.OpenXml.Wordprocessing;
     using System;
     using System.Collections.Generic;
     
@@ -19,11 +18,13 @@ namespace RESTAURANT_MIS
         public int Status { get; set; }
         public string CreatedBy { get; set; }
         public string CreatedAt { get; set; }
-        
-        //[Display(Name="Customer Name")]
         public int CustomerId { get; set; }
         public int ItemId { get; set; }
         public int TableId { get; set; }
+        public Nullable<double> Quantity { get; set; }
+        public Nullable<double> Price { get; set; }
+        public Nullable<double> Total { get; set; }
+    
         public virtual Customers Customers { get; set; }
         public virtual ITEMS ITEMS { get; set; }
         public virtual Tables Tables { get; set; }

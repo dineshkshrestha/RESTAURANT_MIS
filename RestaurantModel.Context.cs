@@ -28,7 +28,7 @@ namespace RESTAURANT_MIS
         public virtual DbSet<Bills> Bills { get; set; }
         public virtual DbSet<Customers> Customers { get; set; }
         public virtual DbSet<ITEMS> ITEMS { get; set; }
-        public virtual DbSet<Orders> Orders { get; set; }
         public virtual DbSet<Tables> Tables { get; set; }
+        public virtual DbSet<Orders> Orders { get; set; }
     }
 }

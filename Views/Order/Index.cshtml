@@ -13,7 +13,7 @@
 
 <section class="content">
     <div class="container-fluid">
-      
+     
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-primary card-outline">
@@ -111,7 +111,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="OrderForm">
                         <label>Table Name</label>
                         @Html.DropDownList("TableId", null, htmlAttributes: new { @class = "form-control" })
 
@@ -122,7 +122,7 @@
                         @Html.DropDownList("ItemId", null, htmlAttributes: new { @class = "form-control" })
 
                         <label>Quantity</label>
-                        <input type="number" class="form-control" name="Quantity" id="Quantity" value="" />
+                        <input type="number" onchange="calculateTotalPrice()" class="form-control" name="Quantity" id="Quantity" value="" />
                         <label>Price</label>
                         <input type="number" class="form-control" readonly name="price" id="price" />
                         <label>Total</label>
@@ -133,7 +133,7 @@
                 </div>
                 <div class="modal-footer bg-primary justify-content-between">
                     <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-outline-light">Save changes</button>
+                    <button type="button" id="save" class="btn btn-outline-light">Save changes</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -145,10 +145,91 @@
 
 @section scripts{
     <script>
+
+        function calculateTotalPrice() {
+            var ItemPrice = $('#price').val();
+            var quantity = $('#Quantity').val();
+            $('#Total').val(ItemPrice * quantity);
+        }
+
         $(document).ready(function() {
 
 
+            $('#save').click(function () {
+                var ItemPrice = $('#price').val();
+                var quantity = $('#Quantity').val();
+                var itemId = $('#ItemId').val();
+                var TableId = $('#TableId').val();
+                var CustomerId = $('#CustomerId').val();
+                var Total = $('#Total').val();
 
+                $.ajax({
+                    type: 'POST',
+                    async: 'TRUE',
+                    dataType: 'json',
+                    cache: false,
+                    data: { customerId: CustomerId, tableId: TableId, ItemId: itemId, Qty: quantity, Price: ItemPrice, Total: Total },
+                    url: '/Order/SaveOrder',
+                    success: function (Data) {
+                            console.log(Data[0].type);
+                        if (Data[0].type == 'success') {
+                            var msg = Data[0].message;
+                            toastr.success(msg);
+                            $('#OrderForm').reset();
+
+                        } else {
+                            var msg = Data[0].message;
+                            toastr.error(msg);
+                        }
+                    },
+                    error: function (Data) {
+                        console.log(Data);
+                    }
+                });
+
+
+
+            });
+
+
+
+
+            $('#ItemId').change(function () {
+                var itemId = $('#ItemId').val();
+              //  alert(itemId);
+                $.ajax({
+                    url: '/Order/GetOrderPrice?ItemId=' + itemId,
+                    type: 'POST',
+                    async: 'TRUE',
+                    dataType: 'json',
+                    cache: false,
+                    success: function (Data) {
+                    //    console.log(Data[0].type);
+                        if (Data[0].type == 'success') {
+
+                            var price = Data[0].Price;
+                            var Name = Data[0].Name;
+
+                            $('#price').val(price);
+                            var msg = Data[0].message;
+                            calculateTotalPrice();
+                            toastr.success(Name + "'s Price is: " + price);
+
+                        } else {
+                            var msg = Data[0].message;              
+                            toastr.error("Item Not found.");
+                            toastr.error(msg);
+                           
+                        }
+                    },
+                    error: function (Data) {
+                        console.log(Data);
+                    }
+                });
+            });
+
+            
+           
             
 
             

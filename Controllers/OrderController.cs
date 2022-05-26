@@ -21,6 +21,94 @@ namespace RESTAURANT_MIS.Controllers
             return View(db.Orders.Where(a=>a.Status!=3).ToList());
         }
 
+        [HttpPost]
+        public JsonResult GetItemPrice(int ItemId)
+        {
+            var item = db.ITEMS.Find(ItemId);
+            return Json(item.Price);
+        }
+
+
+        [HttpPost]
+        public JsonResult GetOrderPrice(int ItemId)
+        {
+            List<dynamic> resultData = new List<dynamic>();
+            var item = db.ITEMS.Find(ItemId);
+            if (item != null)
+            {
+                resultData.Add(new {
+                    item.Price,
+                    item.Name,
+                    type="success",
+                    message = "Item Found"
+                });
+            }
+            else
+            {
+                resultData.Add(new
+                {
+                    type = "error",
+                    message = "Item Not Found"
+                });
+            }
+
+            return new JsonResult()
+            {
+                Data=resultData,
+                ContentType = "application/json",
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                MaxJsonLength = Int32.MaxValue
+            };
+
+        }
+
+            [HttpPost]
+        public JsonResult SaveOrder(int customerId,int tableId,int ItemId,float Qty, float Price, float Total )
+        {
+            List<dynamic> resultData = new List<dynamic>();
+            try
+            {
+                Orders order = new Orders()
+                {
+                    CustomerId = customerId,
+                    TableId = tableId,
+                    ItemId = ItemId,
+                    Quantity = Qty,
+                    Price = Price,
+                    Total = Total,
+                    Status = 1,
+                    CreatedAt = DateTime.Now.ToString(),
+                    CreatedBy = "dinesh"
+                };
+
+                db.Orders.Add(order);
+                db.SaveChanges();
+
+                resultData.Add(new
+                {
+                    type = "success",
+                    message = "Order Saved successfully."
+                });
+            }
+            catch (Exception ex)
+            {
+                resultData.Add(new
+                {
+                    type = "error",
+                    message = "Error in saving your order: Error: "+ex.Message
+                });
+            }
+
+            return new JsonResult()
+            {
+                Data=resultData,
+                ContentType = "application/json",
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                MaxJsonLength = Int32.MaxValue
+            };
+
+        }
+
 
 
         [HttpGet]

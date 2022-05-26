@@ -8,11 +8,11 @@
         <EntityTypeShape EntityType="Restaurant_MISModel.Bills" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Restaurant_MISModel.Customers" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="Restaurant_MISModel.ITEMS" Width="1.5" PointX="0.75" PointY="6.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Restaurant_MISModel.Orders" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Restaurant_MISModel.Tables" Width="1.5" PointX="0.75" PointY="11.125" IsExpanded="true" />
-        <AssociationConnector Association="Restaurant_MISModel.FK__Orders__Customer__34C8D9D1" ManuallyRouted="false" />
-        <AssociationConnector Association="Restaurant_MISModel.FK__Orders__ItemId__35BCFE0A" ManuallyRouted="false" />
-        <AssociationConnector Association="Restaurant_MISModel.FK__Orders__TableId__36B12243" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Restaurant_MISModel.Orders" Width="1.5" PointX="3" PointY="5.25" />
+        <AssociationConnector Association="Restaurant_MISModel.FK__Orders__Customer__34C8D9D1" />
+        <AssociationConnector Association="Restaurant_MISModel.FK__Orders__ItemId__35BCFE0A" />
+        <AssociationConnector Association="Restaurant_MISModel.FK__Orders__TableId__36B12243" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Restaurant_MISModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Restaurant_MISModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Bills">
           <Key>
             <PropertyRef Name="Billid" />
@@ -60,6 +60,9 @@
           <Property Name="CustomerId" Type="int" Nullable="false" />
           <Property Name="ItemId" Type="int" Nullable="false" />
           <Property Name="TableId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="float" />
+          <Property Name="Price" Type="float" />
+          <Property Name="Total" Type="float" />
         </EntityType>
         <EntityType Name="Tables">
           <Key>
@@ -125,8 +128,7 @@
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Restaurant_MISModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -156,7 +158,7 @@
           <Property Name="CreatedAt" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedAt" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__Customer__34C8D9D1" FromRole="Customers" ToRole="Orders" />
+          <NavigationProperty Name="Orders" Relationship="Restaurant_MISModel.FK__Orders__Customer__34C8D9D1" FromRole="Customers" ToRole="Orders" />
         </EntityType>
         <EntityType Name="ITEMS">
           <Key>
@@ -174,22 +176,7 @@
           <Property Name="UpdatedAt" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="DeletedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="DeletedAt" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__ItemId__35BCFE0A" FromRole="ITEMS" ToRole="Orders" />
-        </EntityType>
-        <EntityType Name="Orders">
-          <Key>
-            <PropertyRef Name="Orderid" />
-          </Key>
-          <Property Name="Orderid" Type="Int32" Nullable="false" />
-          <Property Name="Status" Type="Int32" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CreatedAt" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CustomerId" Type="Int32" Nullable="false" />
-          <Property Name="ItemId" Type="Int32" Nullable="false" />
-          <Property Name="TableId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Customers" Relationship="Self.FK__Orders__Customer__34C8D9D1" FromRole="Orders" ToRole="Customers" />
-          <NavigationProperty Name="ITEMS" Relationship="Self.FK__Orders__ItemId__35BCFE0A" FromRole="Orders" ToRole="ITEMS" />
-          <NavigationProperty Name="Tables" Relationship="Self.FK__Orders__TableId__36B12243" FromRole="Orders" ToRole="Tables" />
+          <NavigationProperty Name="Orders" Relationship="Restaurant_MISModel.FK__Orders__ItemId__35BCFE0A" FromRole="ITEMS" ToRole="Orders" />
         </EntityType>
         <EntityType Name="Tables">
           <Key>
@@ -199,11 +186,48 @@
           <Property Name="TableName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="CreatedAt" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__TableId__36B12243" FromRole="Tables" ToRole="Orders" />
+          <NavigationProperty Name="Orders" Relationship="Restaurant_MISModel.FK__Orders__TableId__36B12243" FromRole="Tables" ToRole="Orders" />
+        </EntityType>
+        <EntityContainer Name="RestaurantEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Bills" EntityType="Self.Bills" />
+          <EntitySet Name="Customers" EntityType="Self.Customers" />
+          <EntitySet Name="ITEMS" EntityType="Self.ITEMS" />
+          <EntitySet Name="Tables" EntityType="Self.Tables" />
+          <EntitySet Name="Orders" EntityType="Restaurant_MISModel.Orders" />
+          <AssociationSet Name="FK__Orders__Customer__34C8D9D1" Association="Restaurant_MISModel.FK__Orders__Customer__34C8D9D1">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__ItemId__35BCFE0A" Association="Restaurant_MISModel.FK__Orders__ItemId__35BCFE0A">
+            <End Role="ITEMS" EntitySet="ITEMS" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__TableId__36B12243" Association="Restaurant_MISModel.FK__Orders__TableId__36B12243">
+            <End Role="Tables" EntitySet="Tables" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="Orderid" />
+          </Key>
+          <Property Name="Orderid" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedAt" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="ItemId" Type="Int32" Nullable="false" />
+          <Property Name="TableId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Double" />
+          <Property Name="Price" Type="Double" />
+          <Property Name="Total" Type="Double" />
+          <NavigationProperty Name="Customers" Relationship="Restaurant_MISModel.FK__Orders__Customer__34C8D9D1" FromRole="Orders" ToRole="Customers" />
+          <NavigationProperty Name="ITEMS" Relationship="Restaurant_MISModel.FK__Orders__ItemId__35BCFE0A" FromRole="Orders" ToRole="ITEMS" />
+          <NavigationProperty Name="Tables" Relationship="Restaurant_MISModel.FK__Orders__TableId__36B12243" FromRole="Orders" ToRole="Tables" />
         </EntityType>
         <Association Name="FK__Orders__Customer__34C8D9D1">
-          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
-          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <End Type="Restaurant_MISModel.Customers" Role="Customers" Multiplicity="1" />
+          <End Type="Restaurant_MISModel.Orders" Role="Orders" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customers">
               <PropertyRef Name="Customerid" />
@@ -214,8 +238,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Orders__ItemId__35BCFE0A">
-          <End Role="ITEMS" Type="Self.ITEMS" Multiplicity="1" />
-          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <End Type="Restaurant_MISModel.ITEMS" Role="ITEMS" Multiplicity="1" />
+          <End Type="Restaurant_MISModel.Orders" Role="Orders" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ITEMS">
               <PropertyRef Name="Itemid" />
@@ -226,8 +250,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Orders__TableId__36B12243">
-          <End Role="Tables" Type="Self.Tables" Multiplicity="1" />
-          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <End Type="Restaurant_MISModel.Tables" Role="Tables" Multiplicity="1" />
+          <End Type="Restaurant_MISModel.Orders" Role="Orders" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tables">
               <PropertyRef Name="Tableid" />
@@ -237,25 +261,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="RestaurantEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Bills" EntityType="Self.Bills" />
-          <EntitySet Name="Customers" EntityType="Self.Customers" />
-          <EntitySet Name="ITEMS" EntityType="Self.ITEMS" />
-          <EntitySet Name="Orders" EntityType="Self.Orders" />
-          <EntitySet Name="Tables" EntityType="Self.Tables" />
-          <AssociationSet Name="FK__Orders__Customer__34C8D9D1" Association="Self.FK__Orders__Customer__34C8D9D1">
-            <End Role="Customers" EntitySet="Customers" />
-            <End Role="Orders" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Orders__ItemId__35BCFE0A" Association="Self.FK__Orders__ItemId__35BCFE0A">
-            <End Role="ITEMS" EntitySet="ITEMS" />
-            <End Role="Orders" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Orders__TableId__36B12243" Association="Self.FK__Orders__TableId__36B12243">
-            <End Role="Tables" EntitySet="Tables" />
-            <End Role="Orders" EntitySet="Orders" />
-          </AssociationSet>
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -309,19 +314,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Orders">
-            <EntityTypeMapping TypeName="Restaurant_MISModel.Orders">
-              <MappingFragment StoreEntitySet="Orders">
-                <ScalarProperty Name="Orderid" ColumnName="Orderid" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
-                <ScalarProperty Name="TableId" ColumnName="TableId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Tables">
             <EntityTypeMapping TypeName="Restaurant_MISModel.Tables">
               <MappingFragment StoreEntitySet="Tables">
@@ -329,6 +321,22 @@
                 <ScalarProperty Name="TableName" ColumnName="TableName" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="Restaurant_MISModel.Orders">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="TableId" ColumnName="TableId" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Orderid" ColumnName="Orderid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
