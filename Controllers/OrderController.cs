@@ -15,6 +15,9 @@ namespace RESTAURANT_MIS.Controllers
         // GET: Order
         public ActionResult Index()
         {
+            ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "Name");
+            ViewBag.ItemId = new SelectList(db.ITEMS, "Itemid", "Name");
+            ViewBag.TableId = new SelectList(db.Tables, "Tableid", "TableName");
             return View(db.Orders.Where(a=>a.Status!=3).ToList());
         }
 

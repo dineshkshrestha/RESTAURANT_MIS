@@ -10,65 +10,157 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </th>
-        <th>
-            @*@Html.DisplayNameFor(model => model.Customers.Name)*@
-            Customer Name
-        </th>
-        <th>
-            @*@Html.DisplayNameFor(model => model.ITEMS.Name)*@
-            Item Name
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Tables.TableName)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedBy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedAt)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Customers.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ITEMS.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Tables.TableName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Orderid }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Orderid }) |
+<section class="content">
+    <div class="container-fluid">
+      
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary card-outline">
+                    <div class="card-header">
 
-            <form action="/Order/Delete/@item.Orderid" method="post">
-             @*   <input type="hidden" value="@item.ItemId" name="id" id="id"/>*@
-                <button class="btn btn-danger">Delete</button>
-            </form>
+                        <button type="button" class="btn btn-primary"
+                                data-toggle="modal" data-target="#AddNewOrder">
+                            Add New Order
+                        </button>
+
+                    </div>
+                    <div class="card-body">
+
+                        <table class="table">
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Status)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CreatedBy)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CreatedAt)
+                                </th>
+                                <th>
+                                    @*@Html.DisplayNameFor(model => model.Customers.Name)*@
+                                    Customer Name
+                                </th>
+                                <th>
+                                    @*@Html.DisplayNameFor(model => model.ITEMS.Name)*@
+                                    Item Name
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Tables.TableName)
+                                </th>
+                                <th></th>
+                            </tr>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Status)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CreatedBy)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CreatedAt)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Customers.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ITEMS.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Tables.TableName)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.Orderid }) |
+                                        @Html.ActionLink("Details", "Details", new { id = item.Orderid }) |
+
+                                        <form action="/Order/Delete/@item.Orderid" method="post">
+                                            @*   <input type="hidden" value="@item.ItemId" name="id" id="id"/>*@
+                                            <button class="btn btn-danger">Delete</button>
+                                        </form>
+
+
+
+                                        @*  @Html.ActionLink("Delete", "Delete", new { id=item.Orderid })*@
+                                    </td>
+                                </tr>
+                            }
+
+                        </table>
+
+                    </div>
+                    <!-- /.card -->
+                </div>
+
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- ./row -->
+    </div><!-- /.container-fluid -->
+
+    <div class="modal fade" id="AddNewOrder">
+        <div class="modal-dialog">
+            <div class="modal-content ">
+                <div class="modal-header bg-primary">
+                    <h4 class="modal-title">Primary Modal</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <label>Table Name</label>
+                        @Html.DropDownList("TableId", null, htmlAttributes: new { @class = "form-control" })
+
+                        <label>Customer Name</label>
+                        @Html.DropDownList("CustomerId", null, htmlAttributes: new { @class = "form-control" })
+
+                        <label>Item Name</label>
+                        @Html.DropDownList("ItemId", null, htmlAttributes: new { @class = "form-control" })
+
+                        <label>Quantity</label>
+                        <input type="number" class="form-control" name="Quantity" id="Quantity" value="" />
+                        <label>Price</label>
+                        <input type="number" class="form-control" readonly name="price" id="price" />
+                        <label>Total</label>
+                        <input type="number" class="form-control" readonly name="Total" id="Total" />
+
+                    </form>
+
+                </div>
+                <div class="modal-footer bg-primary justify-content-between">
+                    <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-light">Save changes</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+</section>
+
+@section scripts{
+    <script>
+        $(document).ready(function() {
+
+
+
+            
+
             
 
 
-          @*  @Html.ActionLink("Delete", "Delete", new { id=item.Orderid })*@
-        </td>
-    </tr>
-}
+        });
 
-</table>
+
+
+
+        
+
+        
+    </script>
+    }

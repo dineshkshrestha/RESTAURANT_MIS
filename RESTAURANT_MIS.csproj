@@ -360,6 +360,9 @@
     <Content Include="Plugins\sweetalert2\sweetalert2.js" />
     <Content Include="Plugins\sweetalert2\sweetalert2.min.css" />
     <Content Include="Plugins\sweetalert2\sweetalert2.min.js" />
+    <Content Include="Plugins\toastr\toastr.css" />
+    <Content Include="Plugins\toastr\toastr.min.css" />
+    <Content Include="Plugins\toastr\toastr.min.js" />
     <Content Include="RestaurantModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>RestaurantModel.edmx</DependentUpon>
@@ -397,6 +400,7 @@
     <Content Include="RestaurantModel.edmx.diagram">
       <DependentUpon>RestaurantModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Plugins\toastr\toastr.js.map" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
     <Content Include="Scripts\jquery-3.6.0.min.js" />

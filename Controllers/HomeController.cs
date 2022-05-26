@@ -11,7 +11,8 @@ namespace RESTAURANT_MIS.Controllers
         public ActionResult Index()
         {
 
-
+            TempData["variable"] = "Welcome to ASP.NET MVC!";
+            ViewData["variable"] = "Welcome to ASP.NET MVC!";
 
             ViewBag.Message = "Welcome to our application.";
             ViewBag.MessageType = "Warning";

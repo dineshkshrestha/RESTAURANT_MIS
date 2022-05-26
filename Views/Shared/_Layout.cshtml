@@ -9,8 +9,9 @@
     <link href="@Url.Content("~/Content/AdminLTE/adminlte.min.css")" rel="stylesheet" />
     <link href="@Url.Content("~/Plugins/fontawesome-free/css/all.min.css")" rel="stylesheet" />
     @Scripts.Render("~/bundles/modernizr")
-<link href="~/Plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css" rel="stylesheet" />
-    
+    @*<link href="~/Plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css" rel="stylesheet" />*@
+    <link href="~/Plugins/toastr/toastr.min.css" rel="stylesheet" />
+
 </head>
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
@@ -39,19 +40,39 @@
     </div>
     @Scripts.Render("~/bundles/jquery")
     <script src="@Url.Content("~/Plugins/bootstrap/js/bootstrap.bundle.min.js")"></script>
+    <script src="~/Plugins/toastr/toastr.min.js"></script>
     <script src="@Url.Content("~/Scripts/AdminLTE/adminlte.min.js")"></script>
 
-    <script src="~/Plugins/sweetalert2/sweetalert2.min.js"></script>
+    @*<script src="~/Plugins/sweetalert2/sweetalert2.min.js"></script>*@
 
     <script>
         $(document).ready(function () {
 
-            var Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 9000
-        });
+
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": true,
+                "progressBar": true,
+                "positionClass": "toast-bottom-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "10000",
+                "timeOut": "50000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+        //    var Toast = Swal.mixin({
+        //    toast: true,
+        //    position: 'top-end',
+        //    showConfirmButton: false,
+        //    timer: 9000
+        //});
 
         var msgType = '@ViewBag.MessageType';
         var msg = '@ViewBag.Message';
@@ -59,10 +80,13 @@
         if (msg != "" && msgType != "") {
 
             if (msgType == "Success") {
-                Toast.fire({
-                    icon: 'success',
-                    title: msg
-                });
+                //Toast.fire({
+                //    icon: 'success',
+                //    title: msg
+                //});
+
+                toastr.success(msg);
+
                 //Swal.fire(
                 //    'Good Job!',
                 //    msg,
@@ -71,20 +95,27 @@
 
             }
             else if (msgType == "Warning") {
-                Toast.fire({
-                    icon: 'warning',
-                    title: msg
-                });
+                //Toast.fire({
+                //    icon: 'warning',
+                //    title: msg
+                //});
+                toastr.warning(msg);
             } else if (msgType == "Error") {
-                Toast.fire({
-                    icon: 'error',
-                    title: msg
-                });
+                //Toast.fire({
+                //    icon: 'error',
+                //    title: msg
+                //});
+
+                toastr.error(msg);
+
             }else if (msgType == "Info") {
-                Toast.fire({
-                    icon: 'info',
-                    title: msg
-                });
+                //Toast.fire({
+                //    icon: 'info',
+                //    title: msg
+                //});
+
+                toastr.info(msg);
+
             }
         }
 
@@ -94,7 +125,7 @@
 
     </script>
 
-    
+
     @RenderSection("scripts", required: false)
 </body>
 </html>
