@@ -74,8 +74,8 @@
         //    timer: 9000
         //});
 
-        var msgType = '@ViewBag.MessageType';
-        var msg = '@ViewBag.Message';
+        var msgType = '@TempData["MessageType"]';
+        var msg = '@TempData["Message"]';
 
         if (msg != "" && msgType != "") {
 
