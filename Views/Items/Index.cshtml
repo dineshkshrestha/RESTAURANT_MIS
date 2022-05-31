@@ -70,7 +70,19 @@
                                 @Html.DisplayFor(modelItem => item.Description)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Image)
+                              
+
+                                @if (item.Image != null)
+                                {
+                                    <img src="~/Content/ItemImages/@item.Image" style="height:200px; width:200px;" />
+                }
+                else
+                {
+                    <img src="~/Content/Images/user1-128x128.jpg" style="height:200px; width:200px;" />
+                }
+
+
+
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Price)
