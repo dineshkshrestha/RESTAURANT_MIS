@@ -90,15 +90,15 @@
                 rules: {
                     Name: {
                         required: true,
-                       
+
                     }, Email: {
                         required: true,
-                        Email:true,
+                        email: true,
                     },
                     PhoneNumber: {
                         required: true,
                         minlength: 10,
-                        maxlength:10
+                        maxlength: 10
                     },
                     Address: {
                         required: true
@@ -116,7 +116,7 @@
                         minlength: "Phonenumber should be 10 digits",
                         maxlength: "Phonenumber should be 10 digits"
                     },
-                   
+
                 },
                 errorElement: 'span',
                 errorPlacement: function (error, element) {
@@ -132,8 +132,8 @@
             });
         });
     </script>
-    
-    
-    
-    
-    }
+
+
+
+
+}

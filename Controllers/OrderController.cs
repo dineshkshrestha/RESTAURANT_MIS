@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 
@@ -15,6 +17,16 @@ namespace RESTAURANT_MIS.Controllers
         // GET: Order
         public ActionResult Index()
         {
+
+            string To = "dinesh11shrestha@gmail.com";
+            string CC = "dinesh.shrestha@civilbank.com.np";
+            string Message = "<h1>This is sample email</h1> <br><br><h1>Hello World</h1>";
+            string Subject = "Sample Email";
+
+
+            SendEmail(To, CC, Message, Subject);
+
+
             ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "Name");
             ViewBag.ItemId = new SelectList(db.ITEMS, "Itemid", "Name");
             ViewBag.TableId = new SelectList(db.Tables, "Tableid", "TableName");
@@ -84,6 +96,7 @@ namespace RESTAURANT_MIS.Controllers
                 db.Orders.Add(order);
                 db.SaveChanges();
 
+
                 resultData.Add(new
                 {
                     type = "success",
@@ -98,7 +111,6 @@ namespace RESTAURANT_MIS.Controllers
                     message = "Error in saving your order: Error: "+ex.Message
                 });
             }
-
             return new JsonResult()
             {
                 Data=resultData,
@@ -106,8 +118,53 @@ namespace RESTAURANT_MIS.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet,
                 MaxJsonLength = Int32.MaxValue
             };
+        }
+
+        private static void SendEmail(string ToEmail, string Cc, string Message, string Subject)
+        {
+            try
+            {
+                SmtpClient smtpClient = new SmtpClient();
+                MailAddress senderMail = new MailAddress("dinesh11shrestha@gmail.com", "Restaurant MIS");
+              //  MailAddress senderMail = new MailAddress("dinesh@synergy.com.np", "Restaurant MIS");
+                MailAddress receiverMail = new MailAddress(ToEmail);
+                MailAddress ccEmail = new MailAddress(Cc);
+
+                MailMessage mail = new MailMessage();
+                mail.From = senderMail;
+                mail.To.Add(receiverMail);
+                mail.CC.Add(ccEmail);
+                mail.Priority = MailPriority.High;
+                mail.Subject = Subject;
+                mail.Body = Message;
+                mail.IsBodyHtml = true;
+
+                smtpClient.UseDefaultCredentials = false;
+                smtpClient.Credentials = new NetworkCredential("dinesh@synergy.com.np", "Nepal@321#");
+                smtpClient.EnableSsl = true;
+                smtpClient.Port = 465;
+                smtpClient.Host = "mail.synergy.com.np";
+                smtpClient.Timeout = 0;
+                smtpClient.Send(mail);
+                smtpClient.Dispose();
+
+
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message);
+           }
+
+          
 
         }
+
+
+
+
+
+
 
 
 
