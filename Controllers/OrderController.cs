@@ -125,25 +125,32 @@ namespace RESTAURANT_MIS.Controllers
             try
             {
                 SmtpClient smtpClient = new SmtpClient();
-                MailAddress senderMail = new MailAddress("dinesh11shrestha@gmail.com", "Restaurant MIS");
-              //  MailAddress senderMail = new MailAddress("dinesh@synergy.com.np", "Restaurant MIS");
+               // MailAddress senderMail = new MailAddress("dinesh111shrestha@gmail.com", "Restaurant MIS");
+             //   MailAddress senderMail = new MailAddress("dinesh@synergy.com.np", "Restaurant MIS");
+                MailAddress senderMail = new MailAddress("test@synergy.com.np", "Restaurant MIS");
                 MailAddress receiverMail = new MailAddress(ToEmail);
                 MailAddress ccEmail = new MailAddress(Cc);
 
                 MailMessage mail = new MailMessage();
                 mail.From = senderMail;
                 mail.To.Add(receiverMail);
-                mail.CC.Add(ccEmail);
+             //   mail.CC.Add(ccEmail);
                 mail.Priority = MailPriority.High;
                 mail.Subject = Subject;
                 mail.Body = Message;
                 mail.IsBodyHtml = true;
 
-                smtpClient.UseDefaultCredentials = false;
-                smtpClient.Credentials = new NetworkCredential("dinesh@synergy.com.np", "Nepal@321#");
+                smtpClient.UseDefaultCredentials = true;
+              //  smtpClient.Credentials = new NetworkCredential("dinesh111shrestha@gmail.com", "");
+              //  smtpClient.Credentials = new NetworkCredential("dinesh@synergy.com.np", "w4Rn@{*Oe!;_");
+                smtpClient.Credentials = new NetworkCredential("6b4303c46cd6eb", "66adb48fe8f4d2");
                 smtpClient.EnableSsl = true;
-                smtpClient.Port = 465;
-                smtpClient.Host = "mail.synergy.com.np";
+                //smtpClient.Port = 587;
+              //  smtpClient.Host = "smtp.gmail.com";
+              //  smtpClient.Port = 465;
+               smtpClient.Port = 2525;
+             //   smtpClient.Host = "mail.synergy.com.np";
+                smtpClient.Host = "smtp.mailtrap.io";
                 smtpClient.Timeout = 0;
                 smtpClient.Send(mail);
                 smtpClient.Dispose();
