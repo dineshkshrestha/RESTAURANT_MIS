@@ -175,7 +175,12 @@
                         if (Data[0].type == 'success') {
                             var msg = Data[0].message;
                             toastr.success(msg);
-                            $('#OrderForm').reset();
+                          $('#price').val('');
+                            $('#Quantity').val('');
+                            $('#ItemId').val('').change();
+                         //   $('#TableId').val('').change();
+                          //  $('#CustomerId').val('').change();
+                            $('#Total').val('');
 
                         } else {
                             var msg = Data[0].message;

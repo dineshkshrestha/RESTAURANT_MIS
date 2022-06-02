@@ -13,24 +13,24 @@ namespace RESTAURANT_MIS.Controllers
     {
 
         private RestaurantEntities db = new RestaurantEntities();
+        private string host = "";
+        private string port = "";
+        private string Username = "";
+        private string password = "";
 
+
+        
         // GET: Order
         public ActionResult Index()
         {
 
-            string To = "dinesh11shrestha@gmail.com";
-            string CC = "dinesh.shrestha@civilbank.com.np";
-            string Message = "<h1>This is sample email</h1> <br><br><h1>Hello World</h1>";
-            string Subject = "Sample Email";
-
-
-            SendEmail(To, CC, Message, Subject);
+           
 
 
             ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "Name");
             ViewBag.ItemId = new SelectList(db.ITEMS, "Itemid", "Name");
             ViewBag.TableId = new SelectList(db.Tables, "Tableid", "TableName");
-            return View(db.Orders.Where(a=>a.Status!=3).ToList());
+            return View(db.Orders.Where(a => a.Status != 3).ToList());
         }
 
         [HttpPost]
@@ -48,10 +48,11 @@ namespace RESTAURANT_MIS.Controllers
             var item = db.ITEMS.Find(ItemId);
             if (item != null)
             {
-                resultData.Add(new {
+                resultData.Add(new
+                {
                     item.Price,
                     item.Name,
-                    type="success",
+                    type = "success",
                     message = "Item Found"
                 });
             }
@@ -66,7 +67,7 @@ namespace RESTAURANT_MIS.Controllers
 
             return new JsonResult()
             {
-                Data=resultData,
+                Data = resultData,
                 ContentType = "application/json",
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet,
                 MaxJsonLength = Int32.MaxValue
@@ -74,14 +75,20 @@ namespace RESTAURANT_MIS.Controllers
 
         }
 
-            [HttpPost]
-        public JsonResult SaveOrder(int customerId,int tableId,int ItemId,float Qty, float Price, float Total )
+        [HttpPost]
+        public JsonResult SaveOrder(int customerId, int tableId, int ItemId, float Qty, float Price, float Total)
         {
             List<dynamic> resultData = new List<dynamic>();
             try
             {
+
+                var orderId = db.Orders.OrderByDescending(x=>x.Orderid).First().Orderid;
+           
+
+
                 Orders order = new Orders()
                 {
+                    Orderid=orderId+1,
                     CustomerId = customerId,
                     TableId = tableId,
                     ItemId = ItemId,
@@ -96,6 +103,20 @@ namespace RESTAURANT_MIS.Controllers
                 db.Orders.Add(order);
                 db.SaveChanges();
 
+                string To = "kitchen@gmail.com";
+                string CC = "billCounter@chickenstation.com";
+
+
+                var item = db.ITEMS.Find(order.ItemId);
+                var table = db.Tables.Find(order.TableId);
+
+                string Message = "<h1>New Order Alert </h1> <br><br><h1>Order Name: "+item.Name+" </h1> <h1>Order Quantity: "+order.Quantity+"</h1>";
+                string Subject = "Order of "+item.Name +" In table: "+ table.TableName;
+
+
+                SendEmail(To, CC, Message, Subject);
+
+
 
                 resultData.Add(new
                 {
@@ -108,12 +129,12 @@ namespace RESTAURANT_MIS.Controllers
                 resultData.Add(new
                 {
                     type = "error",
-                    message = "Error in saving your order: Error: "+ex.Message
+                    message = "Error in saving your order: Error: " + ex.Message
                 });
             }
             return new JsonResult()
             {
-                Data=resultData,
+                Data = resultData,
                 ContentType = "application/json",
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet,
                 MaxJsonLength = Int32.MaxValue
@@ -125,47 +146,97 @@ namespace RESTAURANT_MIS.Controllers
             try
             {
                 SmtpClient smtpClient = new SmtpClient();
-               // MailAddress senderMail = new MailAddress("dinesh111shrestha@gmail.com", "Restaurant MIS");
-             //   MailAddress senderMail = new MailAddress("dinesh@synergy.com.np", "Restaurant MIS");
-                MailAddress senderMail = new MailAddress("test@synergy.com.np", "Restaurant MIS");
+                MailAddress senderMail = new MailAddress("RestaurantMIS@ChickenStation.com", "Restaurant MIS");
                 MailAddress receiverMail = new MailAddress(ToEmail);
                 MailAddress ccEmail = new MailAddress(Cc);
 
                 MailMessage mail = new MailMessage();
                 mail.From = senderMail;
                 mail.To.Add(receiverMail);
-             //   mail.CC.Add(ccEmail);
+                mail.CC.Add(ccEmail);
+
                 mail.Priority = MailPriority.High;
                 mail.Subject = Subject;
                 mail.Body = Message;
                 mail.IsBodyHtml = true;
 
                 smtpClient.UseDefaultCredentials = true;
-              //  smtpClient.Credentials = new NetworkCredential("dinesh111shrestha@gmail.com", "");
-              //  smtpClient.Credentials = new NetworkCredential("dinesh@synergy.com.np", "w4Rn@{*Oe!;_");
                 smtpClient.Credentials = new NetworkCredential("6b4303c46cd6eb", "66adb48fe8f4d2");
+           //     smtpClient.Credentials = new NetworkCredential(username, password);
                 smtpClient.EnableSsl = true;
-                //smtpClient.Port = 587;
-              //  smtpClient.Host = "smtp.gmail.com";
-              //  smtpClient.Port = 465;
-               smtpClient.Port = 2525;
-             //   smtpClient.Host = "mail.synergy.com.np";
+                smtpClient.Port = 2525;
                 smtpClient.Host = "smtp.mailtrap.io";
+            //    smtpClient.Host = host;
                 smtpClient.Timeout = 0;
                 smtpClient.Send(mail);
                 smtpClient.Dispose();
-
 
             }
             catch (Exception ex)
             {
 
                 Console.WriteLine(ex.Message);
-           }
+            }
 
-          
+
 
         }
+
+
+        //public ActionResult SendNotice(int id)
+        //{
+
+
+        //    var notice = db.Notice.Find(id);
+
+
+        //    SmtpClient smtpClient = new SmtpClient();
+        //    MailAddress senderMail = new MailAddress("RestaurantMIS@ChickenStation.com", "Restaurant MIS");
+         
+
+        //    MailMessage mail = new MailMessage();
+        //    mail.From = senderMail;
+
+
+        //    var customersList = db.Customers.Where(q=>q.Address=="Kathamndu" && q.Status==1 && q.Name.Contains("Shrestha") ).ToList();
+
+        //    foreach(var cList in customersList)
+        //    {
+        //        MailAddress receiverMail = new MailAddress(cList.Email);
+        //        mail.To.Add(receiverMail);
+        //    }
+
+        //    //var teachers = db.Teachers.Where()..ToList();
+
+
+
+           
+        //    //MailAddress ccEmail = new MailAddress(Cc);
+           
+        //    //mail.CC.Add(ccEmail);
+
+
+
+
+        //    mail.Priority = MailPriority.High;
+        //    mail.Subject = notice.Subject;
+        //    mail.Body = notice.Message;
+        //    mail.IsBodyHtml = true;
+
+        //    smtpClient.UseDefaultCredentials = true;
+        //    smtpClient.Credentials = new NetworkCredential("6b4303c46cd6eb", "66adb48fe8f4d2");
+        //    //     smtpClient.Credentials = new NetworkCredential(username, password);
+        //    smtpClient.EnableSsl = true;
+        //    smtpClient.Port = 2525;
+        //    smtpClient.Host = "smtp.mailtrap.io";
+        //    //    smtpClient.Host = host;
+        //    smtpClient.Timeout = 0;
+        //    smtpClient.Send(mail);
+        //    smtpClient.Dispose();
+
+
+        //    return View();
+        //}
 
 
 
@@ -195,7 +266,7 @@ namespace RESTAURANT_MIS.Controllers
 
         public ActionResult Details(int testid)
         {
-          Orders orders= db.Orders.Find(testid);
+            Orders orders = db.Orders.Find(testid);
 
             if (orders == null)
             {
@@ -216,8 +287,8 @@ namespace RESTAURANT_MIS.Controllers
             }
 
             ViewBag.CustomerId = new SelectList(db.Customers, "Customerid", "Name", orders.CustomerId);
-            ViewBag.ItemId = new SelectList(db.ITEMS, "Itemid", "Name",orders.ItemId);
-            ViewBag.TableId = new SelectList(db.Tables, "Tableid", "TableName",orders.TableId);
+            ViewBag.ItemId = new SelectList(db.ITEMS, "Itemid", "Name", orders.ItemId);
+            ViewBag.TableId = new SelectList(db.Tables, "Tableid", "TableName", orders.TableId);
 
             //ViewBag.CustomerId = new SelectList(db.Customers, "Customerid", "Name", orders.CustomerId);
             //ViewBag.ItemId = new SelectList(db.ITEMS, "Itemid", "Name", orders.ItemId);
@@ -233,7 +304,7 @@ namespace RESTAURANT_MIS.Controllers
             if (ModelState.IsValid)
             {
                 //orders.UpdatedDate = DateTime.Now.ToString();
-                
+
                 db.Entry(orders).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -269,7 +340,7 @@ namespace RESTAURANT_MIS.Controllers
             Orders order = db.Orders.Find(id);
             db.Orders.Remove(order);
             db.Entry(order).State = EntityState.Deleted;
-            db.SaveChanges();    
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
