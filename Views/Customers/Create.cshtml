@@ -55,9 +55,6 @@
                                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                             </div>
                         </div>
-
-
-
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
                                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -82,8 +79,11 @@
     <script>
         $(function () {
             $.validator.setDefaults({
-                submitHandler: function () {
+                submitHandler: function (e) {
                     alert("Form successful submitted!");
+                        e.preventDefault();
+                        e.currentTarget.submit();
+                  
                 }
             });
             $('#quickForm').validate({

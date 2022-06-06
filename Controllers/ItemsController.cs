@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace RESTAURANT_MIS.Controllers
 {
+    [Authorize]
     public class ItemsController : Controller
     {
 

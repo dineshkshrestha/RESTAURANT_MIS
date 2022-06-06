@@ -15,8 +15,12 @@
 </head>
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
+        @if (User.Identity.IsAuthenticated) {
         @Html.Partial("_NavBar")
         @Html.Partial("_SideBar")
+        }
+
+
         <div class="content-wrapper">
             @RenderBody()
         </div>

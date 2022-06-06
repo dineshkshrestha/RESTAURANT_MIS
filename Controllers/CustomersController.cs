@@ -10,6 +10,7 @@ using RESTAURANT_MIS;
 
 namespace RESTAURANT_MIS.Controllers
 {
+    [Authorize]
     public class CustomersController : Controller
     {
         private RestaurantEntities db = new RestaurantEntities();

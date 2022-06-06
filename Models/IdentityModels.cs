@@ -16,6 +16,7 @@ namespace RESTAURANT_MIS.Models
             // Add custom user claims here
             return userIdentity;
         }
+        public string OtherField { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

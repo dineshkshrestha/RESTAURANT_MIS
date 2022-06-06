@@ -10,9 +10,11 @@ using RESTAURANT_MIS;
 
 namespace RESTAURANT_MIS.Controllers
 {
+    [Authorize]
     public class TablesController : Controller
     {
         private RestaurantEntities db = new RestaurantEntities();
+
 
         // GET: Tables
         public ActionResult Index()
@@ -20,6 +22,7 @@ namespace RESTAURANT_MIS.Controllers
             return View(db.Tables.ToList());
         }
 
+        [Authorize]
         // GET: Tables/Details/5
         public ActionResult Details(int? id)
         {
@@ -35,6 +38,7 @@ namespace RESTAURANT_MIS.Controllers
             return View(tables);
         }
 
+        [Authorize]
         // GET: Tables/Create
         public ActionResult Create()
         {

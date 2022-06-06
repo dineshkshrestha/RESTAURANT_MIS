@@ -15,7 +15,34 @@
                 <img src="~/Content/Images/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Alexander Pierce</a>
+         
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        @User.Identity.Name
+
+
+
+            }
+            else
+            {
+              <a href="/Account/Login/" >Please Login First</a> 
+            }
+
+
+
+                    @if (User.Identity.IsAuthenticated)
+            {
+               <form action="/Account/LogOff/" method="post">
+                   @Html.AntiForgeryToken()
+                   <button type="submit" class="btn btn-danger">Log Out</button>
+
+
+               </form>
+            }
+
+
+
+              
             </div>
         </div>
 
