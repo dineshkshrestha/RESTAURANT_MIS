@@ -97,7 +97,7 @@ namespace RESTAURANT_MIS.Controllers
                     Total = Total,
                     Status = 1,
                     CreatedAt = DateTime.Now.ToString(),
-                    CreatedBy = "dinesh"
+                    CreatedBy = User.Identity.Name
                 };
 
                 db.Orders.Add(order);
@@ -109,6 +109,7 @@ namespace RESTAURANT_MIS.Controllers
 
                 var item = db.ITEMS.Find(order.ItemId);
                 var table = db.Tables.Find(order.TableId);
+                var customer = db.Customers.Find(order.CustomerId);
 
                 string Message = "<h1>New Order Alert </h1> <br><br><h1>Order Name: "+item.Name+" </h1> <h1>Order Quantity: "+order.Quantity+"</h1>";
                 string Subject = "Order of "+item.Name +" In table: "+ table.TableName;
@@ -116,12 +117,21 @@ namespace RESTAURANT_MIS.Controllers
 
                 SendEmail(To, CC, Message, Subject);
 
+                // to get customer 
 
 
                 resultData.Add(new
                 {
                     type = "success",
-                    message = "Order Saved successfully."
+                    message = "Order Saved successfully.",
+                    Id= order.Orderid,
+                    Status=order.Status,
+                    CreatedBy=order.CreatedBy,
+                    CreatedAt=order.CreatedAt,
+                    customerName= customer.Name,
+                    ItemName=item.Name,
+                    TableName=table.TableName,
+
                 });
             }
             catch (Exception ex)

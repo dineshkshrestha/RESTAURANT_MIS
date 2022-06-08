@@ -51,44 +51,46 @@
                                 </th>
                                 <th></th>
                             </tr>
+                            <tbody id="TableBody">
 
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Status)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.CreatedBy)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.CreatedAt)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Customers.Name)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.ITEMS.Name)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Tables.TableName)
-                                    </td>
-                                    <td>
-                                        @Html.ActionLink("Edit", "Edit", new { id = item.Orderid }) |
-                                        @Html.ActionLink("Details", "Details", new { id = item.Orderid }) |
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Status)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.CreatedBy)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.CreatedAt)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Customers.Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ITEMS.Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Tables.TableName)
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Edit", "Edit", new { id = item.Orderid }) |
+                                            @Html.ActionLink("Details", "Details", new { id = item.Orderid }) |
 
-                                        <form action="/Order/Delete/@item.Orderid" method="post">
-                                            @*   <input type="hidden" value="@item.ItemId" name="id" id="id"/>*@
-                                            <button class="btn btn-danger">Delete</button>
-                                        </form>
+                                            <form action="/Order/Delete/@item.Orderid" method="post">
+                                                @*   <input type="hidden" value="@item.ItemId" name="id" id="id"/>*@
+                                                <button class="btn btn-danger">Delete</button>
+                                            </form>
 
 
 
-                                        @*  @Html.ActionLink("Delete", "Delete", new { id=item.Orderid })*@
-                                    </td>
-                                </tr>
-                            }
+                                            @*  @Html.ActionLink("Delete", "Delete", new { id=item.Orderid })*@
+                                        </td>
+                                    </tr>
+                                }
 
+                            </tbody>
                         </table>
 
                     </div>
@@ -171,8 +173,13 @@
                     data: { customerId: CustomerId, tableId: TableId, ItemId: itemId, Qty: quantity, Price: ItemPrice, Total: Total },
                     url: '/Order/SaveOrder',
                     success: function (Data) {
+                        console.log(Data);
                             console.log(Data[0].type);
                         if (Data[0].type == 'success') {
+
+                            console.log[Data[0]];
+
+
                             var msg = Data[0].message;
                             toastr.success(msg);
                           $('#price').val('');
@@ -181,6 +188,13 @@
                          //   $('#TableId').val('').change();
                           //  $('#CustomerId').val('').change();
                             $('#Total').val('');
+                            
+
+
+                            //append into table body 
+                            $('#TableBody').append("<tr><td>" + Data[0].Status + "</td> <td>" + Data[0].CreatedBy+"</td></tr>      ");
+
+
 
                         } else {
                             var msg = Data[0].message;

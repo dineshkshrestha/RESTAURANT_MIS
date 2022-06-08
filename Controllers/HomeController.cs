@@ -9,22 +9,48 @@ namespace RESTAURANT_MIS.Controllers
     [Authorize]
     public class HomeController : Controller
     {
+        RestaurantEntities db = new RestaurantEntities();
+
         public ActionResult Index()
         {
 
-            TempData["variable"] = "Welcome to ASP.NET MVC!";
-            ViewData["variable"] = "Welcome to ASP.NET MVC!";
+            TempData["Message"] = "Welcome to ASP.NET MVC!";
+            ViewData["MessageType"] = "Success";
 
-            ViewBag.Message = "Welcome to our application.";
-            ViewBag.MessageType = "Warning";
+            ViewBag.TotalCustomer = db.Customers.Count();
+           
+            ViewBag.TotalOrders = db.Orders.Count();
+            ViewBag.TotalItems=db.ITEMS.Count();
             return View();
         }
+
+        public JsonResult GetItemsDetails()
+        {
+            List<ITEMS> items = db.ITEMS.ToList();
+
+            List<dynamic> datas = new List<dynamic>();
+            foreach(var item in items)
+            {
+                datas.Add(new {
+                    item.Name,
+                        item.Price
+                });
+
+            }
+            return new JsonResult(){
+                Data=datas,
+                JsonRequestBehavior=JsonRequestBehavior.AllowGet
+            };
+        }
+
+
+
 
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
 
-            return View();
+            return View();                                                                                                                                                                                                                              
         }
 
         public ActionResult Contact()
