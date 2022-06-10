@@ -29,6 +29,40 @@ namespace RESTAURANT_MIS.Controllers
         public ActionResult Create(ITEMS item, HttpPostedFileBase file)
         {
 
+            var iType = Request["itemType"];
+            var noticeSendType = Request["noticeSendType"];
+
+
+            if (noticeSendType == "student")
+            {
+               // Type="student"
+              //   Request["student"];
+
+            }
+
+
+
+            if (iType == "Drinks")
+            {
+
+            }
+            else if (iType == "Foods")
+            {
+
+            }
+
+
+            //if (item.itemType == "Drinks")
+            //{
+
+            //}else if (item.itmeType == "Foods")
+            //{
+
+
+            //}
+
+
+
             try
             {
                 if (ModelState.IsValid)
