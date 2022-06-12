@@ -109,9 +109,10 @@ namespace RESTAURANT_MIS.Controllers
             ITEMS item = db.ITEMS.Find(id);
             if (item == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
-            return View(item);
+            return View("Details",item);
+         //   return View(item);
         }
 
 

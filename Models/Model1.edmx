@@ -1,0 +1,843 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="noticeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="CourseId" />
+          </Key>
+          <Property Name="CourseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CourseName" Type="varchar" MaxLength="100" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="100" />
+          <Property Name="CreatedAt" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="NoticeBoard">
+          <Key>
+            <PropertyRef Name="NoticeBoardId" />
+          </Key>
+          <Property Name="NoticeBoardId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NoticeName" Type="varchar" MaxLength="200" />
+          <Property Name="Notice" Type="nvarchar(max)" />
+          <Property Name="NoticeFrom" Type="datetime" />
+          <Property Name="NoticeTo" Type="datetime" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedAt" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedAt" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Notices">
+          <Key>
+            <PropertyRef Name="NoticeId" />
+          </Key>
+          <Property Name="NoticeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NoticeBoardId" Type="int" Nullable="false" />
+          <Property Name="StudentId" Type="int" />
+          <Property Name="TeacherId" Type="int" />
+          <Property Name="SemesterId" Type="int" />
+          <Property Name="SectionId" Type="int" />
+          <Property Name="SubjectId" Type="int" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedAt" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedAt" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Section">
+          <Key>
+            <PropertyRef Name="SectionId" />
+          </Key>
+          <Property Name="SectionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SectionName" Type="varchar" MaxLength="100" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="100" />
+          <Property Name="CreatedAt" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Semester">
+          <Key>
+            <PropertyRef Name="SemesterId" />
+          </Key>
+          <Property Name="SemesterId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SemesterName" Type="varchar" MaxLength="100" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="100" />
+          <Property Name="CreatedAt" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Students">
+          <Key>
+            <PropertyRef Name="StudentId" />
+          </Key>
+          <Property Name="StudentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="SubjectId" Type="int" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="SectionId" Type="int" Nullable="false" />
+          <Property Name="SemesterId" Type="int" Nullable="false" />
+          <Property Name="CourseId" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="100" />
+          <Property Name="CreatedAt" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Subjects">
+          <Key>
+            <PropertyRef Name="SubjectId" />
+          </Key>
+          <Property Name="SubjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubjectName" Type="varchar" MaxLength="100" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="100" />
+          <Property Name="CreatedAt" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Teachers">
+          <Key>
+            <PropertyRef Name="TeacherId" />
+          </Key>
+          <Property Name="TeacherId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="SubjectId" Type="int" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="SectionId" Type="int" Nullable="false" />
+          <Property Name="SemesterId" Type="int" Nullable="false" />
+          <Property Name="CourseId" Type="int" Nullable="false" />
+          <Property Name="ClassTime" Type="varchar" MaxLength="100" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="100" />
+          <Property Name="CreatedAt" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK__Notices__NoticeB__30F848ED">
+          <End Role="NoticeBoard" Type="Self.NoticeBoard" Multiplicity="1" />
+          <End Role="Notices" Type="Self.Notices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NoticeBoard">
+              <PropertyRef Name="NoticeBoardId" />
+            </Principal>
+            <Dependent Role="Notices">
+              <PropertyRef Name="NoticeBoardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Notices__Section__31EC6D26">
+          <End Role="Section" Type="Self.Section" Multiplicity="0..1" />
+          <End Role="Notices" Type="Self.Notices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="SectionId" />
+            </Principal>
+            <Dependent Role="Notices">
+              <PropertyRef Name="SectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Notices__Semeste__32E0915F">
+          <End Role="Semester" Type="Self.Semester" Multiplicity="0..1" />
+          <End Role="Notices" Type="Self.Notices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Semester">
+              <PropertyRef Name="SemesterId" />
+            </Principal>
+            <Dependent Role="Notices">
+              <PropertyRef Name="SemesterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Notices__Student__33D4B598">
+          <End Role="Students" Type="Self.Students" Multiplicity="0..1" />
+          <End Role="Notices" Type="Self.Notices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Students">
+              <PropertyRef Name="StudentId" />
+            </Principal>
+            <Dependent Role="Notices">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Notices__Subject__34C8D9D1">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="0..1" />
+          <End Role="Notices" Type="Self.Notices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="SubjectId" />
+            </Principal>
+            <Dependent Role="Notices">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Notices__Teacher__35BCFE0A">
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="0..1" />
+          <End Role="Notices" Type="Self.Notices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teachers">
+              <PropertyRef Name="TeacherId" />
+            </Principal>
+            <Dependent Role="Notices">
+              <PropertyRef Name="TeacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Students__Course__36B12243">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="Students" Type="Self.Students" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseId" />
+            </Principal>
+            <Dependent Role="Students">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Students__Sectio__37A5467C">
+          <End Role="Section" Type="Self.Section" Multiplicity="1" />
+          <End Role="Students" Type="Self.Students" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="SectionId" />
+            </Principal>
+            <Dependent Role="Students">
+              <PropertyRef Name="SectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Students__Semest__38996AB5">
+          <End Role="Semester" Type="Self.Semester" Multiplicity="1" />
+          <End Role="Students" Type="Self.Students" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Semester">
+              <PropertyRef Name="SemesterId" />
+            </Principal>
+            <Dependent Role="Students">
+              <PropertyRef Name="SemesterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Students__Subjec__398D8EEE">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
+          <End Role="Students" Type="Self.Students" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="SubjectId" />
+            </Principal>
+            <Dependent Role="Students">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Teachers__Course__3A81B327">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseId" />
+            </Principal>
+            <Dependent Role="Teachers">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Teachers__Sectio__3B75D760">
+          <End Role="Section" Type="Self.Section" Multiplicity="1" />
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="SectionId" />
+            </Principal>
+            <Dependent Role="Teachers">
+              <PropertyRef Name="SectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Teachers__Semest__3C69FB99">
+          <End Role="Semester" Type="Self.Semester" Multiplicity="1" />
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Semester">
+              <PropertyRef Name="SemesterId" />
+            </Principal>
+            <Dependent Role="Teachers">
+              <PropertyRef Name="SemesterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Teachers__Subjec__3D5E1FD2">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="SubjectId" />
+            </Principal>
+            <Dependent Role="Teachers">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="noticeModelStoreContainer">
+          <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NoticeBoard" EntityType="Self.NoticeBoard" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notices" EntityType="Self.Notices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Section" EntityType="Self.Section" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Semester" EntityType="Self.Semester" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subjects" EntityType="Self.Subjects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teachers" EntityType="Self.Teachers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Notices__NoticeB__30F848ED" Association="Self.FK__Notices__NoticeB__30F848ED">
+            <End Role="NoticeBoard" EntitySet="NoticeBoard" />
+            <End Role="Notices" EntitySet="Notices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Notices__Section__31EC6D26" Association="Self.FK__Notices__Section__31EC6D26">
+            <End Role="Section" EntitySet="Section" />
+            <End Role="Notices" EntitySet="Notices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Notices__Semeste__32E0915F" Association="Self.FK__Notices__Semeste__32E0915F">
+            <End Role="Semester" EntitySet="Semester" />
+            <End Role="Notices" EntitySet="Notices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Notices__Student__33D4B598" Association="Self.FK__Notices__Student__33D4B598">
+            <End Role="Students" EntitySet="Students" />
+            <End Role="Notices" EntitySet="Notices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Notices__Subject__34C8D9D1" Association="Self.FK__Notices__Subject__34C8D9D1">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Notices" EntitySet="Notices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Notices__Teacher__35BCFE0A" Association="Self.FK__Notices__Teacher__35BCFE0A">
+            <End Role="Teachers" EntitySet="Teachers" />
+            <End Role="Notices" EntitySet="Notices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Students__Course__36B12243" Association="Self.FK__Students__Course__36B12243">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Students" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Students__Sectio__37A5467C" Association="Self.FK__Students__Sectio__37A5467C">
+            <End Role="Section" EntitySet="Section" />
+            <End Role="Students" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Students__Semest__38996AB5" Association="Self.FK__Students__Semest__38996AB5">
+            <End Role="Semester" EntitySet="Semester" />
+            <End Role="Students" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Students__Subjec__398D8EEE" Association="Self.FK__Students__Subjec__398D8EEE">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Students" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Teachers__Course__3A81B327" Association="Self.FK__Teachers__Course__3A81B327">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Teachers" EntitySet="Teachers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Teachers__Sectio__3B75D760" Association="Self.FK__Teachers__Sectio__3B75D760">
+            <End Role="Section" EntitySet="Section" />
+            <End Role="Teachers" EntitySet="Teachers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Teachers__Semest__3C69FB99" Association="Self.FK__Teachers__Semest__3C69FB99">
+            <End Role="Semester" EntitySet="Semester" />
+            <End Role="Teachers" EntitySet="Teachers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Teachers__Subjec__3D5E1FD2" Association="Self.FK__Teachers__Subjec__3D5E1FD2">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Teachers" EntitySet="Teachers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="noticeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="CourseId" />
+          </Key>
+          <Property Name="CourseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CourseName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedAt" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Students" Relationship="Self.FK__Students__Course__36B12243" FromRole="Course" ToRole="Students" />
+          <NavigationProperty Name="Teachers" Relationship="Self.FK__Teachers__Course__3A81B327" FromRole="Course" ToRole="Teachers" />
+        </EntityType>
+        <EntityType Name="NoticeBoard">
+          <Key>
+            <PropertyRef Name="NoticeBoardId" />
+          </Key>
+          <Property Name="NoticeBoardId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NoticeName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Notice" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NoticeFrom" Type="DateTime" Precision="3" />
+          <Property Name="NoticeTo" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedAt" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UpdatedAt" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Notices" Relationship="Self.FK__Notices__NoticeB__30F848ED" FromRole="NoticeBoard" ToRole="Notices" />
+        </EntityType>
+        <EntityType Name="Notices">
+          <Key>
+            <PropertyRef Name="NoticeId" />
+          </Key>
+          <Property Name="NoticeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NoticeBoardId" Type="Int32" Nullable="false" />
+          <Property Name="StudentId" Type="Int32" />
+          <Property Name="TeacherId" Type="Int32" />
+          <Property Name="SemesterId" Type="Int32" />
+          <Property Name="SectionId" Type="Int32" />
+          <Property Name="SubjectId" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedAt" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UpdatedAt" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="NoticeBoard" Relationship="Self.FK__Notices__NoticeB__30F848ED" FromRole="Notices" ToRole="NoticeBoard" />
+          <NavigationProperty Name="Section" Relationship="Self.FK__Notices__Section__31EC6D26" FromRole="Notices" ToRole="Section" />
+          <NavigationProperty Name="Semester" Relationship="Self.FK__Notices__Semeste__32E0915F" FromRole="Notices" ToRole="Semester" />
+          <NavigationProperty Name="Students" Relationship="Self.FK__Notices__Student__33D4B598" FromRole="Notices" ToRole="Students" />
+          <NavigationProperty Name="Subjects" Relationship="Self.FK__Notices__Subject__34C8D9D1" FromRole="Notices" ToRole="Subjects" />
+          <NavigationProperty Name="Teachers" Relationship="Self.FK__Notices__Teacher__35BCFE0A" FromRole="Notices" ToRole="Teachers" />
+        </EntityType>
+        <EntityType Name="Section">
+          <Key>
+            <PropertyRef Name="SectionId" />
+          </Key>
+          <Property Name="SectionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SectionName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedAt" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Notices" Relationship="Self.FK__Notices__Section__31EC6D26" FromRole="Section" ToRole="Notices" />
+          <NavigationProperty Name="Students" Relationship="Self.FK__Students__Sectio__37A5467C" FromRole="Section" ToRole="Students" />
+          <NavigationProperty Name="Teachers" Relationship="Self.FK__Teachers__Sectio__3B75D760" FromRole="Section" ToRole="Teachers" />
+        </EntityType>
+        <EntityType Name="Semester">
+          <Key>
+            <PropertyRef Name="SemesterId" />
+          </Key>
+          <Property Name="SemesterId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SemesterName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedAt" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Notices" Relationship="Self.FK__Notices__Semeste__32E0915F" FromRole="Semester" ToRole="Notices" />
+          <NavigationProperty Name="Students" Relationship="Self.FK__Students__Semest__38996AB5" FromRole="Semester" ToRole="Students" />
+          <NavigationProperty Name="Teachers" Relationship="Self.FK__Teachers__Semest__3C69FB99" FromRole="Semester" ToRole="Teachers" />
+        </EntityType>
+        <EntityType Name="Students">
+          <Key>
+            <PropertyRef Name="StudentId" />
+          </Key>
+          <Property Name="StudentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SubjectId" Type="Int32" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SectionId" Type="Int32" Nullable="false" />
+          <Property Name="SemesterId" Type="Int32" Nullable="false" />
+          <Property Name="CourseId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedAt" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Course" Relationship="Self.FK__Students__Course__36B12243" FromRole="Students" ToRole="Course" />
+          <NavigationProperty Name="Notices" Relationship="Self.FK__Notices__Student__33D4B598" FromRole="Students" ToRole="Notices" />
+          <NavigationProperty Name="Section" Relationship="Self.FK__Students__Sectio__37A5467C" FromRole="Students" ToRole="Section" />
+          <NavigationProperty Name="Semester" Relationship="Self.FK__Students__Semest__38996AB5" FromRole="Students" ToRole="Semester" />
+          <NavigationProperty Name="Subjects" Relationship="Self.FK__Students__Subjec__398D8EEE" FromRole="Students" ToRole="Subjects" />
+        </EntityType>
+        <EntityType Name="Subjects">
+          <Key>
+            <PropertyRef Name="SubjectId" />
+          </Key>
+          <Property Name="SubjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubjectName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedAt" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Notices" Relationship="Self.FK__Notices__Subject__34C8D9D1" FromRole="Subjects" ToRole="Notices" />
+          <NavigationProperty Name="Students" Relationship="Self.FK__Students__Subjec__398D8EEE" FromRole="Subjects" ToRole="Students" />
+          <NavigationProperty Name="Teachers" Relationship="Self.FK__Teachers__Subjec__3D5E1FD2" FromRole="Subjects" ToRole="Teachers" />
+        </EntityType>
+        <EntityType Name="Teachers">
+          <Key>
+            <PropertyRef Name="TeacherId" />
+          </Key>
+          <Property Name="TeacherId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SubjectId" Type="Int32" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SectionId" Type="Int32" Nullable="false" />
+          <Property Name="SemesterId" Type="Int32" Nullable="false" />
+          <Property Name="CourseId" Type="Int32" Nullable="false" />
+          <Property Name="ClassTime" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedAt" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Course" Relationship="Self.FK__Teachers__Course__3A81B327" FromRole="Teachers" ToRole="Course" />
+          <NavigationProperty Name="Notices" Relationship="Self.FK__Notices__Teacher__35BCFE0A" FromRole="Teachers" ToRole="Notices" />
+          <NavigationProperty Name="Section" Relationship="Self.FK__Teachers__Sectio__3B75D760" FromRole="Teachers" ToRole="Section" />
+          <NavigationProperty Name="Semester" Relationship="Self.FK__Teachers__Semest__3C69FB99" FromRole="Teachers" ToRole="Semester" />
+          <NavigationProperty Name="Subjects" Relationship="Self.FK__Teachers__Subjec__3D5E1FD2" FromRole="Teachers" ToRole="Subjects" />
+        </EntityType>
+        <Association Name="FK__Students__Course__36B12243">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="Students" Type="Self.Students" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseId" />
+            </Principal>
+            <Dependent Role="Students">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Teachers__Course__3A81B327">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseId" />
+            </Principal>
+            <Dependent Role="Teachers">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Notices__NoticeB__30F848ED">
+          <End Role="NoticeBoard" Type="Self.NoticeBoard" Multiplicity="1" />
+          <End Role="Notices" Type="Self.Notices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NoticeBoard">
+              <PropertyRef Name="NoticeBoardId" />
+            </Principal>
+            <Dependent Role="Notices">
+              <PropertyRef Name="NoticeBoardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Notices__Section__31EC6D26">
+          <End Role="Section" Type="Self.Section" Multiplicity="0..1" />
+          <End Role="Notices" Type="Self.Notices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="SectionId" />
+            </Principal>
+            <Dependent Role="Notices">
+              <PropertyRef Name="SectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Notices__Semeste__32E0915F">
+          <End Role="Semester" Type="Self.Semester" Multiplicity="0..1" />
+          <End Role="Notices" Type="Self.Notices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Semester">
+              <PropertyRef Name="SemesterId" />
+            </Principal>
+            <Dependent Role="Notices">
+              <PropertyRef Name="SemesterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Notices__Student__33D4B598">
+          <End Role="Students" Type="Self.Students" Multiplicity="0..1" />
+          <End Role="Notices" Type="Self.Notices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Students">
+              <PropertyRef Name="StudentId" />
+            </Principal>
+            <Dependent Role="Notices">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Notices__Subject__34C8D9D1">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="0..1" />
+          <End Role="Notices" Type="Self.Notices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="SubjectId" />
+            </Principal>
+            <Dependent Role="Notices">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Notices__Teacher__35BCFE0A">
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="0..1" />
+          <End Role="Notices" Type="Self.Notices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teachers">
+              <PropertyRef Name="TeacherId" />
+            </Principal>
+            <Dependent Role="Notices">
+              <PropertyRef Name="TeacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Students__Sectio__37A5467C">
+          <End Role="Section" Type="Self.Section" Multiplicity="1" />
+          <End Role="Students" Type="Self.Students" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="SectionId" />
+            </Principal>
+            <Dependent Role="Students">
+              <PropertyRef Name="SectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Teachers__Sectio__3B75D760">
+          <End Role="Section" Type="Self.Section" Multiplicity="1" />
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="SectionId" />
+            </Principal>
+            <Dependent Role="Teachers">
+              <PropertyRef Name="SectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Students__Semest__38996AB5">
+          <End Role="Semester" Type="Self.Semester" Multiplicity="1" />
+          <End Role="Students" Type="Self.Students" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Semester">
+              <PropertyRef Name="SemesterId" />
+            </Principal>
+            <Dependent Role="Students">
+              <PropertyRef Name="SemesterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Teachers__Semest__3C69FB99">
+          <End Role="Semester" Type="Self.Semester" Multiplicity="1" />
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Semester">
+              <PropertyRef Name="SemesterId" />
+            </Principal>
+            <Dependent Role="Teachers">
+              <PropertyRef Name="SemesterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Students__Subjec__398D8EEE">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
+          <End Role="Students" Type="Self.Students" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="SubjectId" />
+            </Principal>
+            <Dependent Role="Students">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Teachers__Subjec__3D5E1FD2">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="SubjectId" />
+            </Principal>
+            <Dependent Role="Teachers">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="noticeEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Course" EntityType="Self.Course" />
+          <EntitySet Name="NoticeBoard" EntityType="Self.NoticeBoard" />
+          <EntitySet Name="Notices" EntityType="Self.Notices" />
+          <EntitySet Name="Section" EntityType="Self.Section" />
+          <EntitySet Name="Semester" EntityType="Self.Semester" />
+          <EntitySet Name="Students" EntityType="Self.Students" />
+          <EntitySet Name="Subjects" EntityType="Self.Subjects" />
+          <EntitySet Name="Teachers" EntityType="Self.Teachers" />
+          <AssociationSet Name="FK__Students__Course__36B12243" Association="Self.FK__Students__Course__36B12243">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Students" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Teachers__Course__3A81B327" Association="Self.FK__Teachers__Course__3A81B327">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Teachers" EntitySet="Teachers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Notices__NoticeB__30F848ED" Association="Self.FK__Notices__NoticeB__30F848ED">
+            <End Role="NoticeBoard" EntitySet="NoticeBoard" />
+            <End Role="Notices" EntitySet="Notices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Notices__Section__31EC6D26" Association="Self.FK__Notices__Section__31EC6D26">
+            <End Role="Section" EntitySet="Section" />
+            <End Role="Notices" EntitySet="Notices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Notices__Semeste__32E0915F" Association="Self.FK__Notices__Semeste__32E0915F">
+            <End Role="Semester" EntitySet="Semester" />
+            <End Role="Notices" EntitySet="Notices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Notices__Student__33D4B598" Association="Self.FK__Notices__Student__33D4B598">
+            <End Role="Students" EntitySet="Students" />
+            <End Role="Notices" EntitySet="Notices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Notices__Subject__34C8D9D1" Association="Self.FK__Notices__Subject__34C8D9D1">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Notices" EntitySet="Notices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Notices__Teacher__35BCFE0A" Association="Self.FK__Notices__Teacher__35BCFE0A">
+            <End Role="Teachers" EntitySet="Teachers" />
+            <End Role="Notices" EntitySet="Notices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Students__Sectio__37A5467C" Association="Self.FK__Students__Sectio__37A5467C">
+            <End Role="Section" EntitySet="Section" />
+            <End Role="Students" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Teachers__Sectio__3B75D760" Association="Self.FK__Teachers__Sectio__3B75D760">
+            <End Role="Section" EntitySet="Section" />
+            <End Role="Teachers" EntitySet="Teachers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Students__Semest__38996AB5" Association="Self.FK__Students__Semest__38996AB5">
+            <End Role="Semester" EntitySet="Semester" />
+            <End Role="Students" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Teachers__Semest__3C69FB99" Association="Self.FK__Teachers__Semest__3C69FB99">
+            <End Role="Semester" EntitySet="Semester" />
+            <End Role="Teachers" EntitySet="Teachers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Students__Subjec__398D8EEE" Association="Self.FK__Students__Subjec__398D8EEE">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Students" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Teachers__Subjec__3D5E1FD2" Association="Self.FK__Teachers__Subjec__3D5E1FD2">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Teachers" EntitySet="Teachers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="noticeModelStoreContainer" CdmEntityContainer="noticeEntities">
+          <EntitySetMapping Name="Course">
+            <EntityTypeMapping TypeName="noticeModel.Course">
+              <MappingFragment StoreEntitySet="Course">
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NoticeBoard">
+            <EntityTypeMapping TypeName="noticeModel.NoticeBoard">
+              <MappingFragment StoreEntitySet="NoticeBoard">
+                <ScalarProperty Name="NoticeBoardId" ColumnName="NoticeBoardId" />
+                <ScalarProperty Name="NoticeName" ColumnName="NoticeName" />
+                <ScalarProperty Name="Notice" ColumnName="Notice" />
+                <ScalarProperty Name="NoticeFrom" ColumnName="NoticeFrom" />
+                <ScalarProperty Name="NoticeTo" ColumnName="NoticeTo" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notices">
+            <EntityTypeMapping TypeName="noticeModel.Notices">
+              <MappingFragment StoreEntitySet="Notices">
+                <ScalarProperty Name="NoticeId" ColumnName="NoticeId" />
+                <ScalarProperty Name="NoticeBoardId" ColumnName="NoticeBoardId" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+                <ScalarProperty Name="SemesterId" ColumnName="SemesterId" />
+                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+                <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Section">
+            <EntityTypeMapping TypeName="noticeModel.Section">
+              <MappingFragment StoreEntitySet="Section">
+                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+                <ScalarProperty Name="SectionName" ColumnName="SectionName" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Semester">
+            <EntityTypeMapping TypeName="noticeModel.Semester">
+              <MappingFragment StoreEntitySet="Semester">
+                <ScalarProperty Name="SemesterId" ColumnName="SemesterId" />
+                <ScalarProperty Name="SemesterName" ColumnName="SemesterName" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="noticeModel.Students">
+              <MappingFragment StoreEntitySet="Students">
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+                <ScalarProperty Name="SemesterId" ColumnName="SemesterId" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subjects">
+            <EntityTypeMapping TypeName="noticeModel.Subjects">
+              <MappingFragment StoreEntitySet="Subjects">
+                <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
+                <ScalarProperty Name="SubjectName" ColumnName="SubjectName" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teachers">
+            <EntityTypeMapping TypeName="noticeModel.Teachers">
+              <MappingFragment StoreEntitySet="Teachers">
+                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+                <ScalarProperty Name="SemesterId" ColumnName="SemesterId" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="ClassTime" ColumnName="ClassTime" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

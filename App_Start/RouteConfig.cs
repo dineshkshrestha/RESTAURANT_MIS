@@ -18,6 +18,12 @@ namespace RESTAURANT_MIS
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+            
+            routes.MapRoute(
+                name: "CustomRouting",
+                url: "{controller}/{id}/{action}",
+                defaults: new { controller = "Home", id = UrlParameter.Optional, action = "Index" }
+            );
 
 
 

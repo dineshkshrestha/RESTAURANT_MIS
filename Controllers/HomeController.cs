@@ -11,6 +11,8 @@ namespace RESTAURANT_MIS.Controllers
     {
         RestaurantEntities db = new RestaurantEntities();
 
+
+      //  [Authorize[Role("","")]
         public ActionResult Index()
         {
 

@@ -13,6 +13,14 @@
         <AssociationConnector Association="Restaurant_MISModel.FK__Orders__Customer__34C8D9D1" />
         <AssociationConnector Association="Restaurant_MISModel.FK__Orders__ItemId__35BCFE0A" />
         <AssociationConnector Association="Restaurant_MISModel.FK__Orders__TableId__36B12243" />
+        <EntityTypeShape EntityType="Restaurant_MISModel.C__MigrationHistory" Width="1.5" PointX="8.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Restaurant_MISModel.AspNetRoles" Width="1.5" PointX="5.375" PointY="6.5" />
+        <EntityTypeShape EntityType="Restaurant_MISModel.AspNetUserClaims" Width="1.5" PointX="9.875" PointY="5" />
+        <EntityTypeShape EntityType="Restaurant_MISModel.AspNetUserLogins" Width="1.5" PointX="9.875" PointY="7.75" />
+        <EntityTypeShape EntityType="Restaurant_MISModel.AspNetUsers" Width="1.5" PointX="7.625" PointY="5.25" />
+        <AssociationConnector Association="Restaurant_MISModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="Restaurant_MISModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="Restaurant_MISModel.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

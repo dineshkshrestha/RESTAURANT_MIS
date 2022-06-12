@@ -9,6 +9,8 @@ using System.Web.Mvc;
 
 namespace RESTAURANT_MIS.Controllers
 {
+
+    [Authorize]
     public class OrderController : Controller
     {
 
@@ -19,18 +21,46 @@ namespace RESTAURANT_MIS.Controllers
         private string password = "";
 
 
-        
+
+
+      //  [Authorize(Roles = "Admin")]
         // GET: Order
         public ActionResult Index()
         {
 
-           
+            //   User.Identity.Name;
+
+
+            //var user 
+        //    var user = db.AspNetUsers.Where(a => a.OtherField == "Branch1").FirstOrDefault();
+        AspNetUsers     user = db.AspNetUsers.Where(a => a.OtherField == "Branch1").FirstOrDefault();
+
+
+
+
+            var orders = db.Orders.Where(a => a.Status != 3).ToList();
+            if (User.IsInRole("Admin"))
+            {
+
+                orders = db.Orders.ToList();
+
+            }
+
+             if (User.IsInRole("User"))
+            {
+
+         //       orders = db.Orders.Where(a=>a.CreatedBy==User.Identity.Name && a.Branch== user.OtherField).ToList();
+
+            }
+
+
+
 
 
             ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "Name");
             ViewBag.ItemId = new SelectList(db.ITEMS, "Itemid", "Name");
             ViewBag.TableId = new SelectList(db.Tables, "Tableid", "TableName");
-            return View(db.Orders.Where(a => a.Status != 3).ToList());
+            return View(orders);
         }
 
         [HttpPost]
