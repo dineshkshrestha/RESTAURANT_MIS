@@ -20,7 +20,9 @@ namespace RESTAURANT_MIS.Controllers
             ViewData["MessageType"] = "Success";
 
             ViewBag.TotalCustomer = db.Customers.Count();
-           
+
+            ViewBag.ActiveOrder = db.Orders.Where(a => a.Status == 1).ToList();
+
             ViewBag.TotalOrders = db.Orders.Count();
             ViewBag.TotalItems=db.ITEMS.Count();
             return View();
